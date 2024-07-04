@@ -1,3 +1,15 @@
+import { Routes, Route } from "react-router-dom";
+import LoginAdmin from "./admin/LoginAdmin";
+import AdminHome from "./admin/AdminHome";
+import "./scss/admin.scss";
+
 export default function App() {
-  return <div>App</div>;
+  return (
+    <>
+      <Routes>
+        <Route path="/loginAdmin" element={<LoginAdmin />} />
+        <Route path="/adminHome" element={<AdminHome />} />
+      </Routes>
+    </>
+  );
 }
