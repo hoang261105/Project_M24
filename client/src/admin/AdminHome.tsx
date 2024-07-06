@@ -12,6 +12,7 @@ export default function AdminHome() {
     <>
       <div className="sidebar">
         <div className="logo">
+          <h2>ADMIN</h2> <br />
           <ul className="menu">
             <li className="active">
               <NavLink to={"/adminHome"}>

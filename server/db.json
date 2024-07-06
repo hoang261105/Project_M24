@@ -1,7 +1,245 @@
 {
-    "user": [
+  "course": [
+    {
+      "id": 1,
+      "nameCourse": "Khóa luyện thi ĐGNL",
+      "created_at": "04/07/2024 18:51:39",
+      "subjectNum": 0
+    },
+    {
+      "id": 2,
+      "nameCourse": "Khóa luyện thi tốt nghiệp THPT",
+      "created_at": "03/07/2024 23:32:03",
+      "subjectNum": 0
+    },
+    {
+      "id": 3,
+      "nameCourse": "Khóa luyện thi cấp 3",
+      "created_at": "03/07/2024 23:32:02",
+      "subjectNum": 0
+    },
+    {
+      "id": 4,
+      "nameCourse": "Khóa luyện thi cấp 2",
+      "created_at": "03/07/2024 23:32:00",
+      "subjectNum": 0
+    },
+    {
+      "id": 5,
+      "nameCourse": "Khóa luyện thi cấp 1",
+      "created_at": "03/07/2024 23:31:56",
+      "subjectNum": 0
+    },
+    {
+      "id": 6,
+      "nameCourse": "Khóa luyện thi IELTS 1",
+      "created_at": "05/07/2024 12:55:54",
+      "subjectNum": 0
+    }
+  ],
+  "lesson": [
+    {
+      "id": 1,
+      "idCourse": 1,
+      "nameSubject": "Môn Toán Cao Cấp",
+      "created_at": "29/02/2024",
+      "chapter": 0
+    },
+    {
+      "id": 2,
+      "idCourse": 2,
+      "nameSubject": "Môn Toán",
+      "created_at": "19/01/2023",
+      "chapter": 0
+    },
+    {
+      "id": 3,
+      "idCourse": 3,
+      "nameSubject": "Môn Toán 11",
+      "created_at": "23/01/2024",
+      "chapter": 0
+    },
+    {
+      "id": 4,
+      "idCourse": 4,
+      "nameSubject": "Môn Toán 9",
+      "created_at": "17/12/2022",
+      "chapter": 0
+    },
+    {
+      "id": 5,
+      "idCourse": 5,
+      "nameSubject": "Môn Toán 5",
+      "created_at": "05/06/2024",
+      "chapter": 0
+    },
+    {
+      "id": 6,
+      "idCourse": 2,
+      "nameSubject": "Môn Vật Lý",
+      "created_at": "22/07/2023",
+      "chapter": 0
+    }
+  ],
+  "exam": [
+    {
+      "id": 1,
+      "idLesson": 1,
+      "nameLesson": "Chương 1: Tập hợp và ánh xạ",
+      "dateAdd": "29/02/2022",
+      "examTurn": 2000,
+      "level": 1
+    },
+    {
+      "id": 2,
+      "idLesson": 1,
+      "nameLesson": "Chương 2: Hình học, giải tích",
+      "dateAdd": "11/07/2022",
+      "examTurn": 4000,
+      "level": 2
+    },
+    {
+      "id": 3,
+      "idLesson": 2,
+      "nameLesson": "Đề thi tốt nghiệp THPT Môn Toán năm 2022",
+      "dateAdd": "23/08/2023",
+      "examTurn": 12000,
+      "level": 3
+    },
+    {
+      "id": 4,
+      "idLesson": 6,
+      "nameLesson": "Đề thi tốt nghiệp THPT Vật Lý năm 2023",
+      "dateAdd": "09/12/2023",
+      "examTurn": 20000,
+      "level": 4
+    },
+    {
+      "id": 5,
+      "idLesson": 3,
+      "nameLesson": "Chương 1: Xác suất, thống kê",
+      "dateAdd": "14/11/2023",
+      "examTurn": 25000,
+      "level": 3
+    },
+    {
+      "id": 6,
+      "idLesson": 4,
+      "nameLesson": "Chương 1: Căn bậc hai",
+      "dateAdd": "09/10/2023",
+      "examTurn": 40000,
+      "level": 4
+    },
+    {
+      "id": 7,
+      "idLesson": 5,
+      "nameLesson": "Chương 1: Đại lượng",
+      "dateAdd": "19/11/2023",
+      "examTurn": 22000,
+      "level": 4
+    }
+  ],
+  "question": [
+    {
+      "id": 1,
+      "idExam": 4,
+      "nameQues": "Công thức tính tính vận tốc là gì?",
+      "created_at": "22/05/2022",
+      "option": [
         {
-            "id": 1
+          "answer": "v = s / t",
+          "status": 1
+        },
+        {
+          "answer": "v = t / s",
+          "status": 0
+        },
+        {
+          "answer": "v = s.t",
+          "status": 0
+        },
+        {
+          "answer": "v = s - t",
+          "status": 0
         }
-    ]
+      ],
+      "correct": 1
+    },
+    {
+      "id": 2,
+      "idExam": 2,
+      "nameQues": "1 + 1 bằng mấy?",
+      "created_at": "30/04/2023",
+      "option": [
+        {
+          "answer": "1",
+          "status": 0
+        },
+        {
+          "answer": "2",
+          "status": 1
+        },
+        {
+          "answer": "3",
+          "status": 0
+        },
+        {
+          "answer": "4",
+          "status": 0
+        }
+      ],
+      "correct": {
+        "status": 1
+      }
+    },
+    {
+      "id": 3,
+      "idExam": 2,
+      "nameQues": "Tỉnh thành nào rộng nhất Việt Nam?",
+      "created_at": "25/11/2022",
+      "option": [
+        {
+          "answer": "Thanh Hóa",
+          "status": 0
+        },
+        {
+          "answer": "Gia Lai",
+          "status": 0
+        },
+        {
+          "answer": "Nghệ An",
+          "status": 1
+        },
+        {
+          "answer": "Sơn La",
+          "status": 0
+        }
+      ],
+      "correct": {
+        "status": 1
+      }
+    }
+  ],
+  "answers": [
+    {
+      "id": 1,
+      "idUser": 2,
+      "idExam": 4,
+      "score": 5
+    }
+  ],
+  "user": [
+    {
+      "id": 1,
+      "name": "hoang2005",
+      "email": "huyhoangcs2611@gmail.com",
+      "password": "hoang2005",
+      "confirmPassword": "hoang2005",
+      "status": 0,
+      "image": "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
+      "created_at": "06/07/2024 16:55:56",
+      "address": ""
+    }
+  ],
+  "history": []
 }
