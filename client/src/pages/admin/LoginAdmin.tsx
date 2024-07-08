@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Admin } from "../interface/admin";
+import { Admin } from "../../interface/admin";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginAdmin() {

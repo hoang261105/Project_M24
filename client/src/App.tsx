@@ -1,7 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import LoginAdmin from "./admin/LoginAdmin";
-import AdminHome from "./admin/AdminHome";
-import AdminUser from "./admin/AdminUser";
+import LoginAdmin from "./pages/admin/LoginAdmin";
+import AdminHome from "./pages/admin/AdminHome";
+import AdminUser from "./pages/admin/AdminUser";
+import AdminCourse from "./pages/admin/AdminCourse";
 import "./scss/admin.scss";
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
         <Route path="/loginAdmin" element={<LoginAdmin />} />
         <Route path="/adminHome" element={<AdminHome />} />
         <Route path="/adminUser" element={<AdminUser />} />
+        <Route path="/adminCourse" element={<AdminCourse />} />
       </Routes>
     </>
   );

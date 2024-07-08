@@ -8,8 +8,8 @@ import {
   addUser,
   getAllUser,
   updateUserStatus,
-} from "../services/admin/user.service";
-import { Account, Users } from "../interface/admin";
+} from "../../services/admin/user.service";
+import { Account, Users } from "../../interface/admin";
 import { format } from "date-fns";
 
 function validateEmail(email: any) {

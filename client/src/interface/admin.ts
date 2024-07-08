@@ -21,3 +21,10 @@ export interface Account{
     password: string,
     confirmPassword: string
 }
+
+export interface Course{
+    id: number,
+    nameCourse: string,
+    subjectNum: number,
+    created_at: string
+}
