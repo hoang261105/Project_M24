@@ -218,6 +218,19 @@
       "correct": {
         "status": 1
       }
+    },
+    {
+      "nameQues": "1 + 1 bằng mấy?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": "2",
+      "idExam": "1",
+      "created_at": "09/07/2024 16:39:55",
+      "id": 4
     }
   ],
   "answers": [

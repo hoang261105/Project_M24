@@ -3,6 +3,24 @@ export type Admin = {
     password: string
 }
 
+export interface Course{
+    id: number,
+    nameCourse: string,
+    describe: string,
+    created_at: string
+}
+
+export interface AddCourse{
+    nameCourse: string,
+    describe: string
+}
+
+export interface EditCourse{
+    nameCourse: string,
+    describe: string,
+}
+
+
 export type Users = {
     id: number,
     name: string,
@@ -14,17 +32,55 @@ export type Users = {
     address: string,
     status: number
 }
+
+export interface Subject{
+    id: number,
+    idCourse: number,
+    nameSubject: string,
+    describe: string
+    created_at: string,
+}
+
+export interface AddSubject{
+    nameSubject: string,
+    describe: string,
+}
+
+export interface Exam{
+    id: number,
+    idLesson: number,
+    nameLesson: string,
+    describe: string
+    dateAdd: string,
+    examTurn: number,
+    level: number
+}
+
+export interface AddExam{
+    nameLesson: string,
+    describe: string,
+    level: number
+}
+
+export interface Question{
+    id: number,
+    idExam: number,
+    nameQues: string,
+    created_at: string,
+    options: string[];
+    answer: string
+}
+
+export interface AddQues{
+    nameQues: string,
+    options: string[];
+    answer: string
+}
+
 export interface Account{
     id: number,
     username: string,
     email: string,
     password: string,
     confirmPassword: string
-}
-
-export interface Course{
-    id: number,
-    nameCourse: string,
-    subjectNum: number,
-    created_at: string
 }
