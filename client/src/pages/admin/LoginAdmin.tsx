@@ -107,6 +107,7 @@ export default function LoginAdmin() {
               </form>
             </div>
           </div>
+
           <div className="col-sm-6 px-0 d-none d-sm-block">
             <img
               src="https://file.unica.vn/storage/fc2ee9cfd8f54fd092257c83fa8d328ec9fbcefa/cong-cu-tao-de-thi-online.jpeg"
