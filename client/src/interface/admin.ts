@@ -7,12 +7,14 @@ export interface Course{
     id: number,
     nameCourse: string,
     describe: string,
-    created_at: string
+    created_at: string,
+    image: string
 }
 
 export interface AddCourse{
     nameCourse: string,
-    describe: string
+    describe: string,
+    image: string,
 }
 
 export interface EditCourse{
@@ -39,6 +41,7 @@ export interface Subject{
     nameSubject: string,
     describe: string
     created_at: string,
+    image: string
 }
 
 export interface AddSubject{

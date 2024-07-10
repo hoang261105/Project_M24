@@ -1,9 +1,10 @@
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   addCourse,
   deleteCourse,
@@ -11,11 +12,14 @@ import {
   searchCourse,
   updateCourse,
 } from "../../services/admin/course.service";
-import { Course } from "../../interface/admin";
+import { AddCourse, Course } from "../../interface/admin";
 import { format } from "date-fns";
 import Menu from "../../components/admin/Menu";
+import { storage } from "../../config/firebase";
 
 export default function AdminCourse() {
+  const [image, setImage] = useState<string>("");
+  const [uploadImage, setUploadImage] = useState<any>(null);
   const navigate = useNavigate();
   const courseState = useSelector((state: any) => state.courses.course);
   const dispatch = useDispatch();
@@ -40,24 +44,68 @@ export default function AdminCourse() {
   };
 
   // Hàm thêm khóa học
-  const [courseName, setCourseName] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<AddCourse>({
+    nameCourse: "",
+    describe: "",
+    image: "",
+  });
+  const [error, setError] = useState({
+    nameCourse: "",
+    describe: "",
+  });
   const [courseDelete, setCourseDelete] = useState<Course | null>(null);
 
   const handleAdd = async () => {
-    if (!courseName) {
-      setError(true);
+    let valid = true;
+    if (!inputValue.nameCourse) {
+      error.nameCourse = "Tên khóa thi không được để trống";
+      valid = false;
     } else {
-      setError(false);
+      error.nameCourse = "";
+    }
+
+    if (!inputValue.describe) {
+      error.describe = "Vui lòng nhập mô tả khóa học";
+      valid = false;
+    } else {
+      error.describe = "";
+    }
+
+    setError({ ...error });
+
+    if (valid) {
       const newCourse = {
-        nameCourse: courseName,
+        ...inputValue,
+        nameCourse: inputValue.nameCourse,
         created_at: format(new Date(), "dd/MM/yyyy HH:mm:ss"),
-        subjectNum: 0,
+        describe: inputValue.describe,
       };
+
       await dispatch(addCourse(newCourse));
       await dispatch(getAllCourse());
       setShow(false);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInputValue({ ...inputValue, [name]: value });
+  };
+
+  const handleUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let image: any = e.target.files?.[0];
+    const imageRef = ref(storage, `images/${image.name}`);
+    uploadBytes(imageRef, uploadImage).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then(async (url) => {
+        console.log(url);
+        setImage(image);
+        setInputValue({
+          ...inputValue,
+          image: url,
+        });
+      });
+    });
+    console.log(image);
   };
 
   // Hàm xóa khóa học
@@ -69,14 +117,39 @@ export default function AdminCourse() {
 
   // Hàm sửa khóa học
   const [courseEdit, setCourseEdit] = useState<Course | null>(null);
-  const handleEdit = async () => {
+  const handleCourseEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (courseEdit) {
+      setCourseEdit({
+        ...courseEdit,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+  const handleEdit = async () => {
+    console.log(123456);
+    let valid = true;
+    if (!courseEdit?.nameCourse) {
+      error.nameCourse = "Tên khóa thi không được để trống";
+      valid = false;
+    } else {
+      error.nameCourse = "";
+    }
+
+    if (!courseEdit?.describe) {
+      error.describe = "Vui lòng nhập mô tả khóa học";
+      valid = false;
+    } else {
+      error.describe = "";
+    }
+
+    setError({ ...error });
+    if (valid && courseEdit) {
       await dispatch(
         updateCourse({
           id: courseEdit.id,
           nameCourse: courseEdit.nameCourse,
           created_at: format(new Date(), "dd/MM/yyyy HH:mm:ss"),
-          subjectNum: 0,
+          describe: courseEdit.describe,
         })
       );
       await dispatch(getAllCourse());
@@ -123,16 +196,46 @@ export default function AdminCourse() {
                         type="text"
                         placeholder="Nhập tên khóa"
                         name="nameCourse"
-                        value={courseName}
-                        onChange={(e) => setCourseName(e.target.value)}
+                        value={inputValue.nameCourse}
+                        onChange={handleChange}
+                      />
+                      {error.nameCourse && (
+                        <span style={{ color: "red", fontSize: 15 }}>
+                          {error.nameCourse}
+                        </span>
+                      )}
+                    </Form.Group>
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlInput1"
+                    >
+                      <Form.Label>Nhập mô tả khóa học</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Nhập mô tả"
+                        name="describe"
+                        value={inputValue.describe}
+                        onChange={handleChange}
+                      />
+                      {error.describe && (
+                        <span style={{ color: "red", fontSize: 15 }}>
+                          {error.describe}
+                        </span>
+                      )}
+                    </Form.Group>
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlInput1"
+                    >
+                      <Form.Label>Hình ảnh</Form.Label>
+                      <Form.Control
+                        type="file"
+                        placeholder="Chọn hình ảnh"
+                        name="image"
+                        onChange={handleUploadChange}
                       />
                     </Form.Group>
                   </Form>
-                  {error && (
-                    <span style={{ color: "red", fontSize: 15 }}>
-                      Tên khóa học không được để trống
-                    </span>
-                  )}
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -161,22 +264,33 @@ export default function AdminCourse() {
                         placeholder="Nhập tên khóa"
                         name="nameCourse"
                         value={courseEdit?.nameCourse || ""}
-                        onChange={(e) => {
-                          if (courseEdit) {
-                            setCourseEdit({
-                              ...courseEdit,
-                              nameCourse: e.target.value,
-                            });
-                          }
-                        }}
+                        onChange={handleCourseEditChange}
                       />
+                      {error.nameCourse && (
+                        <span style={{ color: "red", fontSize: 15 }}>
+                          {error.nameCourse}
+                        </span>
+                      )}
+                    </Form.Group>
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlInput1"
+                    >
+                      <Form.Label>Nhập mô tả khóa</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Nhập mô tả"
+                        name="describe"
+                        value={courseEdit?.describe || ""}
+                        onChange={handleCourseEditChange}
+                      />
+                      {error.describe && (
+                        <span style={{ color: "red", fontSize: 15 }}>
+                          {error.describe}
+                        </span>
+                      )}
                     </Form.Group>
                   </Form>
-                  {error && (
-                    <span style={{ color: "red", fontSize: 15 }}>
-                      Tên khóa học không được để trống
-                    </span>
-                  )}
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -231,7 +345,7 @@ export default function AdminCourse() {
                   </th>
                   <th>Tên khóa học học</th>
                   <th>Ngày tạo</th>
-                  <th>Số môn</th>
+                  <th>Mô tả</th>
                   <th className="w-52">Chức năng</th>
                 </tr>
               </thead>
@@ -247,7 +361,7 @@ export default function AdminCourse() {
                       </a>
                     </td>
                     <td>{course.created_at}</td>
-                    <td>{course.subjectNum}</td>
+                    <td>{course.describe}</td>
                     <td className="flex gap-2">
                       <Button
                         variant="primary"

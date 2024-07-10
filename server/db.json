@@ -4,37 +4,36 @@
       "id": 1,
       "nameCourse": "Khóa luyện thi ĐGNL",
       "created_at": "04/07/2024 18:51:39",
-      "subjectNum": 0
+      "describe": "Khóa chuyên luyện thi ĐGNL chất lượng nhất",
+      "image": "https://hocaz.vn/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fhocthongminhs.appspot.com%2Fprod%2F2023%2F02%2F22%2F90887829.png&w=1920&q=75"
     },
     {
       "id": 2,
       "nameCourse": "Khóa luyện thi tốt nghiệp THPT",
       "created_at": "03/07/2024 23:32:03",
-      "subjectNum": 0
+      "describe": "Khóa chuyên luyện thi TNTHPT chất lượng nhất",
+      "image": "https://hocaz.vn/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fhocthongminhs.appspot.com%2Fprod%2F2022%2F10%2F13%2F57164792.png&w=1920&q=75"
     },
     {
       "id": 3,
       "nameCourse": "Khóa luyện thi cấp 3",
       "created_at": "03/07/2024 23:32:02",
-      "subjectNum": 0
+      "describe": "Khóa chuyên luyện thi cấp 3 chất lượng nhất",
+      "image": "https://hocaz.vn/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fhocthongminhs.appspot.com%2Fprod%2F2022%2F10%2F13%2F88393304.jpg&w=1920&q=75"
     },
     {
       "id": 4,
       "nameCourse": "Khóa luyện thi cấp 2",
       "created_at": "03/07/2024 23:32:00",
-      "subjectNum": 0
+      "describe": "Khóa chuyên luyện thi cấp 2 chất lượng nhất",
+      "image": "https://hocaz.vn/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fhocthongminhs.appspot.com%2Fprod%2F2023%2F06%2F20%2F6141675.png&w=1920&q=75"
     },
     {
-      "id": 5,
       "nameCourse": "Khóa luyện thi cấp 1",
-      "created_at": "03/07/2024 23:31:56",
-      "subjectNum": 0
-    },
-    {
-      "id": 6,
-      "nameCourse": "Khóa luyện thi IELTS 1",
-      "created_at": "05/07/2024 12:55:54",
-      "subjectNum": 0
+      "describe": "Năm 2023",
+      "image": "",
+      "created_at": "10/07/2024 17:25:23",
+      "id": 5
     }
   ],
   "lesson": [
@@ -43,6 +42,8 @@
       "idCourse": 1,
       "nameSubject": "Môn Toán Cao Cấp",
       "created_at": "29/02/2024",
+      "describe": "Bộ đề thi thử THPT Quốc Gia môn Toán có đáp án và lời giải",
+      "image": "https://climatejusticeonline.org/wp-content/uploads/2018/05/nhung-dieu-can-biet-ve-nganh-toan-hoc-ung-dung-1-e1526546539332.jpg",
       "chapter": 0
     },
     {
@@ -50,6 +51,8 @@
       "idCourse": 2,
       "nameSubject": "Môn Toán",
       "created_at": "19/01/2023",
+      "describe": "Bộ đề thi thử THPT Quốc Gia môn Toán có đáp án và lời giải",
+      "image": "https://climatejusticeonline.org/wp-content/uploads/2018/05/nhung-dieu-can-biet-ve-nganh-toan-hoc-ung-dung-1-e1526546539332.jpg",
       "chapter": 0
     },
     {
@@ -57,6 +60,8 @@
       "idCourse": 3,
       "nameSubject": "Môn Toán 11",
       "created_at": "23/01/2024",
+      "describe": "Bộ đề thi thử THPT Quốc Gia môn Toán có đáp án và lời giải",
+      "image": "https://climatejusticeonline.org/wp-content/uploads/2018/05/nhung-dieu-can-biet-ve-nganh-toan-hoc-ung-dung-1-e1526546539332.jpg",
       "chapter": 0
     },
     {
@@ -64,6 +69,8 @@
       "idCourse": 4,
       "nameSubject": "Môn Toán 9",
       "created_at": "17/12/2022",
+      "describe": "Bộ đề thi thử THPT Quốc Gia môn Toán có đáp án và lời giải",
+      "image": "https://climatejusticeonline.org/wp-content/uploads/2018/05/nhung-dieu-can-biet-ve-nganh-toan-hoc-ung-dung-1-e1526546539332.jpg",
       "chapter": 0
     },
     {
@@ -71,6 +78,8 @@
       "idCourse": 5,
       "nameSubject": "Môn Toán 5",
       "created_at": "05/06/2024",
+      "describe": "Bộ đề thi thử THPT Quốc Gia môn Toán có đáp án và lời giải",
+      "image": "https://climatejusticeonline.org/wp-content/uploads/2018/05/nhung-dieu-can-biet-ve-nganh-toan-hoc-ung-dung-1-e1526546539332.jpg",
       "chapter": 0
     },
     {
@@ -78,6 +87,8 @@
       "idCourse": 2,
       "nameSubject": "Môn Vật Lý",
       "created_at": "22/07/2023",
+      "describe": "Bộ đề thi thử THPT Quốc Gia môn Toán có đáp án và lời giải",
+      "image": "https://climatejusticeonline.org/wp-content/uploads/2018/05/nhung-dieu-can-biet-ve-nganh-toan-hoc-ung-dung-1-e1526546539332.jpg",
       "chapter": 0
     }
   ],
