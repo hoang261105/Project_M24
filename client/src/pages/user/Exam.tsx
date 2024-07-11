@@ -1,31 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllSubject,
-  searchSubject,
-} from "../../services/admin/subject.service";
 import { useNavigate, useParams } from "react-router-dom";
-import { Subject } from "../../interface/admin";
 import Header from "../../components/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getAllExam, searchExam } from "../../services/admin/exam.service";
+import { Exam } from "../../interface/admin";
 import Footer from "../../components/Footer";
 
-export default function Subjects() {
-  const { course } = useParams();
-  const { id } = useParams();
-  const subjectState = useSelector((state: any) => state.subjects.subject);
-  console.log(subjectState);
+export default function Exams() {
+  const { subject } = useParams();
+  const { idLesson } = useParams();
+  const examState = useSelector((state: any) => state.exams.exam);
+  console.log(examState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (id) {
-      dispatch(getAllSubject(parseInt(id)));
+    if (idLesson) {
+      dispatch(getAllExam(parseInt(idLesson)));
     }
   }, [dispatch]);
 
-  const handleClick = (id: number, subject: Subject) => {
-    navigate(`/exam/${subject.nameSubject}/${id}`);
+  const handleClick = (id: number, exam: Exam) => {
+    navigate(`/examDetail/${exam.nameLesson}/${id}`);
   };
 
+  // Hàm tìm kiếm đề thi
+  const [search, setSearch] = useState<string>("");
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    await dispatch(searchExam(e.target.value));
+  };
   return (
     <div>
       <Header />
@@ -77,27 +81,42 @@ export default function Subjects() {
           />
         </div>
       </div>
+      <div
+        className="search"
+        style={{ display: "flex", justifyContent: "center", paddingTop: 20 }}
+      >
+        <input
+          type="search"
+          name="search"
+          value={search}
+          style={{
+            width: 300,
+            height: 40,
+            border: "0.5px solid black",
+            borderRadius: 5,
+            fontSize: 20,
+          }}
+          placeholder="Tìm kiếm đề thi"
+          onChange={handleSearch}
+        />
+      </div>
       <main className="main">
         <section className="subject-category">
           {/* render môn toán  */}
           <div className="Informartion-exam">
             <h1 className="title-category" style={{ fontSize: 30 }}>
-              Các môn thi của {course}
+              Các đề thi của {subject}
             </h1>
             <div className="subject-list" id="mathList">
-              {subjectState.map((subject: Subject) => (
-                <a href="" onClick={() => handleClick(subject.id, subject)}>
+              {examState.map((exam: Exam) => (
+                <a href="" onClick={() => handleClick(exam.id, exam)}>
                   <div className="card subject-item" style={{ width: "18rem" }}>
-                    <img
-                      src={subject.image}
-                      className="card-img-top"
-                      alt="..."
-                    />
+                    <img src={exam.image} className="card-img-top" alt="..." />
                     <h3 style={{ textAlign: "center", color: "red" }}>
-                      {subject.nameSubject}
+                      {exam.nameLesson}
                     </h3>
                     <p style={{ textAlign: "center", color: "green" }}>
-                      {subject.describe}
+                      {exam.describe}
                     </p>
                   </div>
                 </a>
@@ -105,42 +124,6 @@ export default function Subjects() {
             </div>
           </div>
         </section>
-        <div id="horizontal" />
-        {/* <nav className="nav-choice">
-        <h1>Độ khó</h1>
-        <ul className="ul-choice">
-          <li >
-            Level 1
-          </li>
-          <li onclick="renderExamsByLevel(2)" id="li-choice">
-            Level 2
-          </li>
-          <li onclick="renderExamsByLevel(3)" id="li-choice">
-            Level 3
-          </li>
-          <li onclick="renderExamsByLevel(4)" id="li-choice">
-            Level 4
-          </li>
-          <li onclick="renderExamsByLevel(5)" id="li-choice">
-            Level 5
-          </li>
-        </ul>
-      </nav> */}
-        {/* Render đề */}
-        <div id="subjectList" className="list-subject" />
-        {/* Render đề */}
-        {/* <section className="choose-list" style={{ marginTop: 100 }}>
-        <div className="next-Pages">
-          <button onclick="previousPage()" type="button" className="btn">
-            <ion-icon name="chevron-back-outline" />
-            <span>Trang trước</span>
-          </button>
-          <button onclick="nextPage()" type="button" className="btn">
-            <span>Trang sau</span>
-            <ion-icon name="chevron-forward-outline" />
-          </button>
-        </div>
-      </section> */}
       </main>
       <Footer />
     </div>

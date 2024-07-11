@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addUser,
   getAllUser,
+  searchUser,
   updateUserStatus,
 } from "../../services/admin/user.service";
 import { Account, Users } from "../../interface/admin";
 import { format } from "date-fns";
+import Menu from "../../components/admin/Menu";
 
 function validateEmail(email: any) {
   return String(email)
@@ -54,12 +56,17 @@ export default function AdminUser() {
   const handleShow = () => setShows(true);
   const [selectedUser, setSelectedUser] = useState<Users | null>(null);
   const userState = useSelector((state: any) => state.users.user);
+  const [filterUser, setFilterUser] = useState<Users[]>([]);
   console.log(userState);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllUser());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    setFilterUser(userState);
+  }, [userState]);
 
   const navigate = useNavigate();
 
@@ -195,58 +202,22 @@ export default function AdminUser() {
     }
   };
 
+  // Hàm tìm kiếm user
+  const [search, setSearch] = useState<string>("");
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value;
+    setSearch(searchValue);
+    if (!searchValue) {
+      setFilterUser(userState);
+    } else {
+      const result = await dispatch(searchUser(searchValue));
+      setFilterUser(result.payload);
+    }
+  };
+
   return (
     <>
-      <div className="sidebar">
-        <div className="logo">
-          <h2>ADMIN</h2> <br />
-          <ul className="menu">
-            <li className="active">
-              <NavLink to={"/adminHome"}>
-                <i className="fas fa-tachometer-alt"></i>
-                <span>Trang chủ</span>
-              </NavLink>
-            </li>
-            <li>
-              <a href="">
-                <i className="fas fa-user"></i>
-                <span>Quản lí tài khoản</span>
-              </a>
-            </li>
-            <li>
-              <NavLink to={"/adminCourse"}>
-                <i className="fa-solid fa-book"></i>
-                <span>Quản lí khóa học</span>
-              </NavLink>
-            </li>
-            <li>
-              <a href="">
-                <i className="fas fa-chart-bar"></i>
-                <span>Phân tích</span>
-              </a>
-            </li>
-
-            <li>
-              <a href="">
-                <i className="fas fa-question-circle"></i>
-                <span>Câu hỏi</span>
-              </a>
-            </li>
-            <li>
-              <a href="">
-                <i className="fas fa-cog"></i>
-                <span>Cài đặt</span>
-              </a>
-            </li>
-            <li className="logout">
-              <a href="" onClick={handleLogOut}>
-                <i className="fas fa-sign-out-alt"></i>
-                <span>Đăng xuất</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <Menu />
       <div className="main-content">
         <div className="header-wrapper">
           <div className="header-title">
@@ -360,7 +331,12 @@ export default function AdminUser() {
             </Modal>
             <div className="search-box">
               <i className="fa-solid fa-search"></i>
-              <input type="text" placeholder="Tìm kiếm ở đây" />
+              <input
+                type="text"
+                placeholder="Tìm kiếm ở đây"
+                onChange={handleSearch}
+                value={search}
+              />
             </div>
             <img
               src="https://static.vecteezy.com/system/resources/thumbnails/005/005/791/small/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"
@@ -391,7 +367,7 @@ export default function AdminUser() {
                 </tr>
               </thead>
               <tbody>
-                {userState.map((user: Users) => (
+                {filterUser.map((user: Users) => (
                   <tr
                     key={user.id}
                     style={{ opacity: user.status === 1 ? 0.5 : 1 }}

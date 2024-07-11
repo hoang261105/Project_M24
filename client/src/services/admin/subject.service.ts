@@ -42,3 +42,13 @@ export const updateSubject: any = createAsyncThunk(
         return response.data;
     }
 )
+
+// API tìm kiếm môm học
+export const searchSubject: any = createAsyncThunk(
+    "subject/searchSubject",
+    async (searchItem: string) => {
+        const URL = import.meta.env.VITE_BASE_URL
+        const response = await axios.get(`${URL}/lesson?nameSubject_like=${searchItem}`);
+        return response.data
+    }
+)

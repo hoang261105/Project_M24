@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Users } from "../../../interface/admin";
-import { addUser, getAllUser, updateUserStatus } from "../../../services/admin/user.service";
+import { addUser, getAllUser, searchUser, updateUserStatus } from "../../../services/admin/user.service";
 
 const userState: Users[] = [];
 
@@ -25,6 +25,9 @@ const userReducer = createSlice({
             if (userIndex !== -1) {
                 state.user[userIndex].status = action.payload.status;
             }
+        })
+        .addCase(searchUser.fulfilled, (state, action) => {
+            state.user = action.payload;
         })
     }
 })

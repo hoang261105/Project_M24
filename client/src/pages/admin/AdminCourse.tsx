@@ -19,7 +19,6 @@ import { storage } from "../../config/firebase";
 
 export default function AdminCourse() {
   const [image, setImage] = useState<string>("");
-  const [uploadImage, setUploadImage] = useState<any>(null);
   const navigate = useNavigate();
   const courseState = useSelector((state: any) => state.courses.course);
   const dispatch = useDispatch();
@@ -41,6 +40,14 @@ export default function AdminCourse() {
   const handleShowEdit = (course: Course) => {
     setCourseEdit(course);
     setShowEdit(true);
+  };
+
+  const resetData = () => {
+    setInputValue({
+      nameCourse: "",
+      describe: "",
+      image: "",
+    });
   };
 
   // Hàm thêm khóa học
@@ -83,6 +90,7 @@ export default function AdminCourse() {
 
       await dispatch(addCourse(newCourse));
       await dispatch(getAllCourse());
+      resetData();
       setShow(false);
     }
   };
@@ -92,12 +100,11 @@ export default function AdminCourse() {
     setInputValue({ ...inputValue, [name]: value });
   };
 
-  const handleUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let image: any = e.target.files?.[0];
+  const handleUploadChange = (e: any) => {
+    let image: any = e.target.files[0];
     const imageRef = ref(storage, `images/${image.name}`);
-    uploadBytes(imageRef, uploadImage).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then(async (url) => {
-        console.log(url);
+    uploadBytes(imageRef, image).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
         setImage(image);
         setInputValue({
           ...inputValue,
@@ -105,7 +112,6 @@ export default function AdminCourse() {
         });
       });
     });
-    console.log(image);
   };
 
   // Hàm xóa khóa học
@@ -320,6 +326,7 @@ export default function AdminCourse() {
                 type="text"
                 placeholder="Tìm kiếm ở đây"
                 onChange={handleSearch}
+                value={search}
               />
             </div>
             <img

@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import { searchSubject } from "../services/admin/subject.service";
+import { searchCourse } from "../services/admin/course.service";
 
 export default function Header() {
   const [account, setAccount] = useState(
@@ -7,6 +10,7 @@ export default function Header() {
   );
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogOut = () => {
     const confirmLogout = confirm("Bạn có chắc chắn đăng xuất không?");
@@ -15,6 +19,14 @@ export default function Header() {
       navigate("/login");
       setAccount(null);
     }
+  };
+
+  const [search, setSearch] = useState<string>("");
+  const handleSearchSubject = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearch(e.target.value);
+    await dispatch(searchCourse(e.target.value));
   };
   return (
     <header className="header">
@@ -31,7 +43,14 @@ export default function Header() {
         </div>
         <div className="container1">
           <form action="" id="form-input">
-            <input type="search" id="myInput" placeholder="tìm kiếm đề" />
+            <input
+              type="search"
+              id="myInput"
+              name="search"
+              value={search}
+              placeholder="Tìm kiếm ở đây"
+              onChange={handleSearchSubject}
+            />
             <ul id="myUL">{/* <li><a href="#">Athens</a></li> */}</ul>
           </form>
         </div>

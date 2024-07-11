@@ -5,6 +5,9 @@ import AdminUser from "./pages/admin/AdminUser";
 import AdminCourse from "./pages/admin/AdminCourse";
 import "./scss/admin.scss";
 import "./css/home.css";
+import "./css/exam.css";
+import "./css/profile.css";
+import "./css/questionPage.css";
 import AdminSubject from "./pages/admin/AdminSubject";
 import AdminExam from "./pages/admin/AdminExam";
 import AdminQues from "./pages/admin/AdminQues";
@@ -12,6 +15,10 @@ import Home from "./pages/user/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Subjects from "./pages/user/Subject";
+import Exams from "./pages/user/Exam";
+import ExamDetail from "./pages/user/ExamDetail";
+import Profile from "./pages/user/Profile";
+import QuestionPage from "./pages/user/QuestionPage";
 
 export default function App() {
   return (
@@ -28,7 +35,11 @@ export default function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/subject/:course/:id" element={<Subjects />} />
+        <Route path="/exam/:subject/:idLesson" element={<Exams />} />
+        <Route path="/examDetail/:subject/:id" element={<ExamDetail />} />
+        <Route path="/questionPage/:exam/:idExam" element={<QuestionPage />} />
       </Routes>
     </>
   );

@@ -47,6 +47,7 @@ export interface Subject{
 export interface AddSubject{
     nameSubject: string,
     describe: string,
+    image: string
 }
 
 export interface Exam{
@@ -54,6 +55,7 @@ export interface Exam{
     idLesson: number,
     nameLesson: string,
     describe: string
+    image: string,
     dateAdd: string,
     examTurn: number,
     level: number

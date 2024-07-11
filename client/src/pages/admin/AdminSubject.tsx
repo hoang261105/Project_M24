@@ -13,8 +13,11 @@ import {
 import { AddSubject, Subject } from "../../interface/admin";
 import Menu from "../../components/admin/Menu";
 import { format } from "date-fns";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../config/firebase";
 
 export default function AdminSubject() {
+  const [image, setImage] = useState<string>("");
   const [subjectDelete, setSubjectDelete] = useState<Subject | null>(null);
   const subjectState = useSelector((state: any) => state.subjects.subject);
   console.log(subjectState);
@@ -37,6 +40,7 @@ export default function AdminSubject() {
     setInputValue({
       nameSubject: "",
       describe: "",
+      image: "",
     });
   };
 
@@ -53,6 +57,7 @@ export default function AdminSubject() {
   const [inputValue, setInputValue] = useState<AddSubject>({
     nameSubject: "",
     describe: "",
+    image: "",
   });
 
   const [error, setError] = useState({
@@ -81,6 +86,7 @@ export default function AdminSubject() {
 
     if (valid) {
       const newSubject = {
+        ...inputValue,
         idCourse: id,
         nameSubject: inputValue.nameSubject,
         describe: inputValue.describe,
@@ -95,6 +101,21 @@ export default function AdminSubject() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInputValue({ ...inputValue, [name]: value });
+  };
+
+  const handleUploadChange = (e: any) => {
+    let image: any = e.target.files[0];
+    console.log(image);
+    const imageRef = ref(storage, `images/${image.name}`);
+    uploadBytes(imageRef, image).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        setImage(image);
+        setInputValue({
+          ...inputValue,
+          image: url,
+        });
+      });
+    });
   };
 
   // Hàm xóa môn thi theo id của khóa học
@@ -201,6 +222,18 @@ export default function AdminSubject() {
                           {error.describe}
                         </span>
                       )}
+                    </Form.Group>
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlInput1"
+                    >
+                      <Form.Label>Hình ảnh</Form.Label>
+                      <Form.Control
+                        type="file"
+                        placeholder="Chọn hình ảnh"
+                        name="image"
+                        onChange={handleUploadChange}
+                      />
                     </Form.Group>
                   </Form>
                 </Modal.Body>

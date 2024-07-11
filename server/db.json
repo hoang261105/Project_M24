@@ -3,9 +3,9 @@
     {
       "id": 1,
       "nameCourse": "Khóa luyện thi ĐGNL",
-      "created_at": "04/07/2024 18:51:39",
-      "describe": "Khóa chuyên luyện thi ĐGNL chất lượng nhất",
-      "image": "https://hocaz.vn/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fhocthongminhs.appspot.com%2Fprod%2F2023%2F02%2F22%2F90887829.png&w=1920&q=75"
+      "created_at": "11/07/2024 10:16:23",
+      "image": "https://hocaz.vn/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fhocthongminhs.appspot.com%2Fprod%2F2023%2F02%2F22%2F90887829.png&w=1920&q=75",
+      "describe": "Khóa chuyên luyện thi ĐGNL chất lượng nhất 1"
     },
     {
       "id": 2,
@@ -29,11 +29,18 @@
       "image": "https://hocaz.vn/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fhocthongminhs.appspot.com%2Fprod%2F2023%2F06%2F20%2F6141675.png&w=1920&q=75"
     },
     {
-      "nameCourse": "Khóa luyện thi cấp 1",
-      "describe": "Năm 2023",
-      "image": "",
-      "created_at": "10/07/2024 17:25:23",
+      "nameCourse": "Khóa luyện thi đại học",
+      "describe": "Toán 123",
+      "image": "https://firebasestorage.googleapis.com/v0/b/project-m24-b5efe.appspot.com/o/images%2F300px-HTML5_logo_resized.svg.png?alt=media&token=06dffb96-6f5e-4771-99d6-cb9f10bc7b02",
+      "created_at": "11/07/2024 09:30:50",
       "id": 5
+    },
+    {
+      "nameCourse": "Khóa luyện thi IELTS",
+      "describe": "Khóa chuyên luyện thi IELTS",
+      "image": "https://firebasestorage.googleapis.com/v0/b/project-m24-b5efe.appspot.com/o/images%2Fca-phe-espresso-2.jpg?alt=media&token=1b645eb9-f7fc-4561-a3a5-1cf7b8c8ef64",
+      "created_at": "11/07/2024 14:57:34",
+      "id": 6
     }
   ],
   "lesson": [
@@ -90,6 +97,22 @@
       "describe": "Bộ đề thi thử THPT Quốc Gia môn Toán có đáp án và lời giải",
       "image": "https://climatejusticeonline.org/wp-content/uploads/2018/05/nhung-dieu-can-biet-ve-nganh-toan-hoc-ung-dung-1-e1526546539332.jpg",
       "chapter": 0
+    },
+    {
+      "nameSubject": "Địa Lý",
+      "describe": "Chuyên luyện thi THPT môn Lịch Sử 1",
+      "image": "https://firebasestorage.googleapis.com/v0/b/project-m24-b5efe.appspot.com/o/images%2F0447_1.jpg?alt=media&token=0665243a-4dfb-497d-abd2-6b3dab68ac8d",
+      "idCourse": "2",
+      "created_at": "11/07/2024 09:47:02",
+      "id": 7
+    },
+    {
+      "nameSubject": "Lịch Sử",
+      "describe": "Luyện thi TNTHPT môn Lịch Sử",
+      "image": "https://firebasestorage.googleapis.com/v0/b/project-m24-b5efe.appspot.com/o/images%2Fca-phe-nguyen-chat.jpg?alt=media&token=3ca09e1c-5dd8-486f-b8e9-a37f902dc65b",
+      "idCourse": "2",
+      "created_at": "11/07/2024 09:52:58",
+      "id": 8
     }
   ],
   "exam": [
@@ -98,6 +121,7 @@
       "idLesson": 1,
       "nameLesson": "Chương 1: Tập hợp và ánh xạ",
       "dateAdd": "29/02/2022",
+      "image": "https://img.pikbest.com/png-images/vector-illustration-of-scientific-formulas-and-calculations-in-physics-and-mathematics-_1431448.png!f305cw",
       "examTurn": 2000,
       "level": 1
     },
@@ -106,7 +130,8 @@
       "idLesson": 1,
       "nameLesson": "Chương 2: Hình học, giải tích",
       "dateAdd": "11/07/2022",
-      "examTurn": 4000,
+      "image": "https://img.pikbest.com/png-images/vector-illustration-of-scientific-formulas-and-calculations-in-physics-and-mathematics-_1431448.png!f305cw",
+      "examTurn": 4100,
       "level": 2
     },
     {
@@ -114,6 +139,7 @@
       "idLesson": 2,
       "nameLesson": "Đề thi tốt nghiệp THPT Môn Toán năm 2022",
       "dateAdd": "23/08/2023",
+      "image": "https://img.pikbest.com/png-images/vector-illustration-of-scientific-formulas-and-calculations-in-physics-and-mathematics-_1431448.png!f305cw",
       "examTurn": 12000,
       "level": 3
     },
@@ -122,6 +148,8 @@
       "idLesson": 6,
       "nameLesson": "Đề thi tốt nghiệp THPT Vật Lý năm 2023",
       "dateAdd": "09/12/2023",
+      "image": "https://img.pikbest.com/png-images/vector-illustration-of-scientific-formulas-and-calculations-in-physics-and-mathematics-_1431448.png!f305cw",
+      "describe": "Đề thi của Sở GD và đào tạo tỉnh Hải Dương",
       "examTurn": 20000,
       "level": 4
     },
@@ -130,6 +158,7 @@
       "idLesson": 3,
       "nameLesson": "Chương 1: Xác suất, thống kê",
       "dateAdd": "14/11/2023",
+      "image": "https://img.pikbest.com/png-images/vector-illustration-of-scientific-formulas-and-calculations-in-physics-and-mathematics-_1431448.png!f305cw",
       "examTurn": 25000,
       "level": 3
     },
@@ -138,6 +167,7 @@
       "idLesson": 4,
       "nameLesson": "Chương 1: Căn bậc hai",
       "dateAdd": "09/10/2023",
+      "image": "https://img.pikbest.com/png-images/vector-illustration-of-scientific-formulas-and-calculations-in-physics-and-mathematics-_1431448.png!f305cw",
       "examTurn": 40000,
       "level": 4
     },
@@ -146,6 +176,7 @@
       "idLesson": 5,
       "nameLesson": "Chương 1: Đại lượng",
       "dateAdd": "19/11/2023",
+      "image": "https://img.pikbest.com/png-images/vector-illustration-of-scientific-formulas-and-calculations-in-physics-and-mathematics-_1431448.png!f305cw",
       "examTurn": 22000,
       "level": 4
     }
@@ -156,79 +187,26 @@
       "idExam": 4,
       "nameQues": "Công thức tính tính vận tốc là gì?",
       "created_at": "22/05/2022",
-      "option": [
-        {
-          "answer": "v = s / t",
-          "status": 1
-        },
-        {
-          "answer": "v = t / s",
-          "status": 0
-        },
-        {
-          "answer": "v = s.t",
-          "status": 0
-        },
-        {
-          "answer": "v = s - t",
-          "status": 0
-        }
+      "options": [
+        "v = s/t",
+        "v = s/t^2",
+        "v = s/t^3",
+        "v = s/t^4"
       ],
-      "correct": 1
-    },
-    {
-      "id": 2,
-      "idExam": 2,
-      "nameQues": "1 + 1 bằng mấy?",
-      "created_at": "30/04/2023",
-      "option": [
-        {
-          "answer": "1",
-          "status": 0
-        },
-        {
-          "answer": "2",
-          "status": 1
-        },
-        {
-          "answer": "3",
-          "status": 0
-        },
-        {
-          "answer": "4",
-          "status": 0
-        }
-      ],
-      "correct": {
-        "status": 1
-      }
+      "answer": "v = s/t"
     },
     {
       "id": 3,
       "idExam": 2,
       "nameQues": "Tỉnh thành nào rộng nhất Việt Nam?",
       "created_at": "25/11/2022",
-      "option": [
-        {
-          "answer": "Thanh Hóa",
-          "status": 0
-        },
-        {
-          "answer": "Gia Lai",
-          "status": 0
-        },
-        {
-          "answer": "Nghệ An",
-          "status": 1
-        },
-        {
-          "answer": "Sơn La",
-          "status": 0
-        }
+      "options": [
+        "Thanh Hóa",
+        "Gia Lai",
+        "Nghệ An",
+        "Sơn La"
       ],
-      "correct": {
-        "status": 1
-      }
+      "answer": "Nghệ An"
     },
     {
       "nameQues": "1 + 1 bằng mấy?",
@@ -242,6 +220,19 @@
       "idExam": "1",
       "created_at": "09/07/2024 16:39:55",
       "id": 4
+    },
+    {
+      "nameQues": "1 + 1 bằng mấy?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": "2",
+      "idExam": "4",
+      "created_at": "11/07/2024 13:06:59",
+      "id": 5
     }
   ],
   "answers": [
@@ -273,6 +264,17 @@
       "status": 0,
       "image": "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
       "created_at": "07/07/2024 09:50:29",
+      "address": ""
+    },
+    {
+      "id": 3,
+      "name": "trang2005",
+      "email": "trang2005@gmail.com",
+      "password": "trang2005",
+      "confirmPassword": "trang2005",
+      "status": 0,
+      "image": "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
+      "created_at": "11/07/2024 00:05:58",
       "address": ""
     }
   ],

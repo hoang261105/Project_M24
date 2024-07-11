@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Exam } from "../../../interface/admin";
-import { addExam, deleteExam, getAllExam, updateExam } from "../../../services/admin/exam.service";
+import { addExam, deleteExam, getAllExam, getExamById, searchExam, updateExam } from "../../../services/admin/exam.service";
 
 const examState: Exam[] = [];
 
 const examReducer = createSlice({
     name: "exam",
     initialState: {
-        exam: examState
+        exam: examState,
+        examDetail: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -22,7 +23,12 @@ const examReducer = createSlice({
         })
         .addCase(updateExam.fulfilled, (state, action) => {
             state.exam = state.exam.map((exam) => exam.id === action.payload.id ? action.payload : exam);
-
+        })
+        .addCase(getExamById.fulfilled, (state, action) => {
+            state.examDetail = action.payload;
+        })
+        .addCase(searchExam.fulfilled, (state, action) => {
+            state.exam = action.payload;
         })
     }
 })

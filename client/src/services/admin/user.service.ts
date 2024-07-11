@@ -29,3 +29,13 @@ export const updateUserStatus: any = createAsyncThunk(
         return response.data;
     }
 )
+
+// API tìm kiếm user
+export const searchUser: any = createAsyncThunk(
+    "user/searchUser",
+    async (searchUser: string) => {
+        let URL = import.meta.env.VITE_BASE_URL
+        const response = await axios.get(`${URL}/user?name_like=${searchUser}`);
+        return response.data;
+    }
+)
