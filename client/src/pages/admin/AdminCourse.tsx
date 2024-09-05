@@ -10,6 +10,7 @@ import {
   deleteCourse,
   getAllCourse,
   searchCourse,
+  sortCourse,
   updateCourse,
 } from "../../services/admin/course.service";
 import { AddCourse, Course } from "../../interface/admin";
@@ -171,6 +172,11 @@ export default function AdminCourse() {
     await dispatch(searchCourse(search));
   };
 
+  // Hàm sắp xếp khóa học
+  const handleSort = (sort: string) => {
+    dispatch(sortCourse(sort));
+  }
+
   return (
     <>
       <Menu />
@@ -312,12 +318,13 @@ export default function AdminCourse() {
           </div>
           <div className="user-info">
             <div className="sort">
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onChange={(e) => handleSort(e.target.value)}
+              >
                 <option>Sắp xếp theo</option>
-                <option value="1">Ngày tạo</option>
-                <option value="2">Từ A-Z</option>
-                <option value="3">Từ Z-A</option>
-                <option value="4">Số môn</option>
+                <option value="asc">Từ A-Z</option>
+                <option value="desc">Từ Z-A</option>
               </Form.Select>
             </div>
             <div className="search-box">
@@ -339,17 +346,13 @@ export default function AdminCourse() {
         <div className="table-wrapper">
           <div className="title">
             <h3 className="main-title">Bảng quản lí khóa học</h3> <br />
-            <button className="btn btn-danger">Xóa tất cả</button>
-            <button className="btn btn-warning">Xóa nhiều</button>
           </div>
           <br />
           <div className="table-container">
             <table>
               <thead>
                 <tr>
-                  <th>
-                    <input type="checkbox" />
-                  </th>
+                  <th>STT</th>
                   <th>Tên khóa học học</th>
                   <th>Ngày tạo</th>
                   <th>Mô tả</th>
@@ -357,11 +360,9 @@ export default function AdminCourse() {
                 </tr>
               </thead>
               <tbody>
-                {courseState.map((course: Course) => (
+                {courseState.map((course: Course, index: number) => (
                   <tr key={course.id}>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
+                    <td>{index + 1}</td>
                     <td>
                       <a href="" onClick={() => handleClick(course.id, course)}>
                         {course.nameCourse}

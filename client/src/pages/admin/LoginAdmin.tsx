@@ -43,7 +43,7 @@ export default function LoginAdmin() {
           <div className="col-sm-6 text-black">
             <div className="px-5 ms-xl-4 flex items-center">
               <img
-                src="https://cdn2.f-cdn.com/contestentries/1258406/24810152/5aad7e30e7440_thumb900.jpg"
+                src="https://static.vecteezy.com/system/resources/previews/009/182/690/original/thi-letter-logo-design-with-polygon-shape-thi-polygon-and-cube-shape-logo-design-thi-hexagon-logo-template-white-and-black-colors-thi-monogram-business-and-real-estate-logo-vector.jpg"
                 alt=""
                 className="w-36 h-36"
               />

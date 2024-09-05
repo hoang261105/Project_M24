@@ -80,7 +80,7 @@ export default function AdminQues() {
       const newQues = {
         ...question,
         idExam: idExam,
-        created_at: format(new Date(), "dd/MM/yyyy HH:mm:ss"),
+        created_at: format(new Date(), "yyyy/MM/dd"),
       };
       await dispatch(addQues(newQues));
       setShow(false);

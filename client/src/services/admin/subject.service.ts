@@ -52,3 +52,13 @@ export const searchSubject: any = createAsyncThunk(
         return response.data
     }
 )
+
+// API sắp xếp môn thi từ A-Z và từ Z-A
+export const sortSubject: any = createAsyncThunk(
+    "subject/sortSubject",
+    async (sort: string) => {
+        const URL = import.meta.env.VITE_BASE_URL;
+        const response = await axios.get(`${URL}/lesson?_sort=nameSubject&_order=${sort}`);
+        return response.data
+    }
+)

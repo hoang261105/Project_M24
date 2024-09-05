@@ -64,7 +64,7 @@ export interface Exam{
 export interface AddExam{
     nameLesson: string,
     describe: string,
-    level: number
+    image: string
 }
 
 export interface Question{

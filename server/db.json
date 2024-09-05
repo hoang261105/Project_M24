@@ -41,6 +41,12 @@
       "image": "https://firebasestorage.googleapis.com/v0/b/project-m24-b5efe.appspot.com/o/images%2Fca-phe-espresso-2.jpg?alt=media&token=1b645eb9-f7fc-4561-a3a5-1cf7b8c8ef64",
       "created_at": "11/07/2024 14:57:34",
       "id": 6
+    },
+    {
+      "id": 7,
+      "nameCourse": "Khoa luyen thi TOEIC",
+      "created_at": "16/07/2024 17:25:52",
+      "describe": "Khoa chuyen thi TOEIC 1"
     }
   ],
   "lesson": [
@@ -113,6 +119,13 @@
       "idCourse": "2",
       "created_at": "11/07/2024 09:52:58",
       "id": 8
+    },
+    {
+      "id": 9,
+      "idCourse": "2",
+      "nameSubject": "Tieng Anh",
+      "created_at": "16/07/2024 17:26:32",
+      "describe": "12345678"
     }
   ],
   "exam": [
@@ -179,6 +192,24 @@
       "image": "https://img.pikbest.com/png-images/vector-illustration-of-scientific-formulas-and-calculations-in-physics-and-mathematics-_1431448.png!f305cw",
       "examTurn": 22000,
       "level": 4
+    },
+    {
+      "idLesson": "7",
+      "nameLesson": "Địa lý Tự nhiên",
+      "describe": "1234567",
+      "image": "https://firebasestorage.googleapis.com/v0/b/project-m24-b5efe.appspot.com/o/images%2FDJI_0210.jpg?alt=media&token=a4c71e22-56e1-47ab-8ea6-2e20d76202a4",
+      "dateAdd": "16/07/2024 16:34:24",
+      "examTurn": 0,
+      "id": 8
+    },
+    {
+      "idLesson": "6",
+      "nameLesson": "Đề thi tốt nghiệp THPT Vật Lý năm 2023 mã đề 101",
+      "describe": "sfdfdvvh",
+      "image": "https://firebasestorage.googleapis.com/v0/b/project-m24-b5efe.appspot.com/o/images%2FDJI_0210.jpg?alt=media&token=558694e3-3db1-4ded-ad8f-06bbd911ec69",
+      "dateAdd": "16/07/2024 17:27:23",
+      "examTurn": 0,
+      "id": 9
     }
   ],
   "question": [
@@ -233,6 +264,45 @@
       "idExam": "4",
       "created_at": "11/07/2024 13:06:59",
       "id": 5
+    },
+    {
+      "nameQues": "9 nhân 3 bằng mấy?",
+      "options": [
+        "21",
+        "27",
+        "36",
+        "42"
+      ],
+      "answer": "27",
+      "idExam": "5",
+      "created_at": "16/07/2024 02:45:30",
+      "id": 6
+    },
+    {
+      "nameQues": "1 + 6 bằng mấy?",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "answer": "7",
+      "idExam": "4",
+      "created_at": "16/07/2024 17:28:07",
+      "id": 7
+    },
+    {
+      "nameQues": "9 nhân 3 bằng mấy?",
+      "options": [
+        "24",
+        "27",
+        "30",
+        "33"
+      ],
+      "answer": "27",
+      "idExam": "4",
+      "created_at": "2024/07/16",
+      "id": 8
     }
   ],
   "answers": [
@@ -251,9 +321,9 @@
       "password": "hoang2005",
       "confirmPassword": "hoang2005",
       "status": 0,
-      "image": "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
+      "image": "https://firebasestorage.googleapis.com/v0/b/project-m24-b5efe.appspot.com/o/images%2Fz5638862384724_478c2b9f25493d9da8972d9a9d0f4481.jpg?alt=media&token=45c144a8-3147-422d-87a0-4a5455d66194",
       "created_at": "06/07/2024 16:55:56",
-      "address": ""
+      "address": "Thanh Xuân, Hà Nội"
     },
     {
       "id": 2,
@@ -264,7 +334,12 @@
       "status": 0,
       "image": "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
       "created_at": "07/07/2024 09:50:29",
-      "address": ""
+      "address": "12345",
+      "inputValue": {
+        "name": "huyen2005",
+        "email": "huyen2005@gmail.com",
+        "address": "123"
+      }
     },
     {
       "id": 3,
@@ -276,7 +351,100 @@
       "image": "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
       "created_at": "11/07/2024 00:05:58",
       "address": ""
+    },
+    {
+      "name": "trang2005",
+      "email": "trang2005@gmail.com",
+      "password": "trang2005",
+      "confirmPassword": "trang2005",
+      "status": 0,
+      "image": "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
+      "created_at": "16/07/2024 17:16:24",
+      "address": "",
+      "id": 4
+    },
+    {
+      "id": 5,
+      "name": "quynh2005",
+      "email": "quynh2005@gmail.com",
+      "password": "quynh2005",
+      "confirmPassword": "quynh2005",
+      "status": 1,
+      "image": "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
+      "created_at": "16/07/2024 17:24:21",
+      "address": ""
     }
   ],
-  "history": []
+  "history": [
+    {
+      "idUser": 1,
+      "idExam": 4,
+      "idCourse": 2,
+      "idSubject": 6,
+      "score": 5,
+      "timeCompleted": "00:04",
+      "date": "16/07/2024",
+      "id": 1
+    },
+    {
+      "idUser": 1,
+      "idExam": 2,
+      "idCourse": 1,
+      "idSubject": 1,
+      "score": 10,
+      "timeCompleted": "00:04",
+      "date": "16/07/2024",
+      "id": 2
+    },
+    {
+      "idUser": 1,
+      "idExam": 4,
+      "idCourse": 2,
+      "idSubject": 6,
+      "score": 10,
+      "timeCompleted": "00:04",
+      "date": "16/07/2024",
+      "id": 3
+    },
+    {
+      "idUser": 3,
+      "idExam": 4,
+      "idCourse": 2,
+      "idSubject": 6,
+      "score": 5,
+      "timeCompleted": "00:07",
+      "date": "16/07/2024",
+      "id": 4
+    },
+    {
+      "idUser": 3,
+      "idExam": 2,
+      "idCourse": 1,
+      "idSubject": 1,
+      "score": 5,
+      "timeCompleted": "00:20",
+      "date": "16/07/2024",
+      "id": 5
+    },
+    {
+      "idUser": 1,
+      "idExam": 4,
+      "idCourse": 2,
+      "idSubject": 6,
+      "score": 0,
+      "timeCompleted": "00:05",
+      "date": "13/08/2024",
+      "id": 6
+    },
+    {
+      "idUser": 1,
+      "idExam": 4,
+      "idCourse": 2,
+      "idSubject": 6,
+      "score": 5,
+      "timeCompleted": "00:23",
+      "date": "13/08/2024",
+      "id": 7
+    }
+  ]
 }

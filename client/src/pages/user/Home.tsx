@@ -17,6 +17,7 @@ export default function Home() {
 
   const handleClick = (id: number, course: Course) => {
     navigate(`/subject/${course.nameCourse}/${id}`);
+    localStorage.setItem("idCourse", JSON.stringify(id))
   };
   return (
     <div>
@@ -272,72 +273,7 @@ export default function Home() {
         </button>
         {/* banner*/}
       </section>
-      {/* đề thi tiêu biểu */}
-      <section className="attend-exam">
-        <h1 style={{ textAlign: "center", fontSize: 40 }}>Đề thi tiêu biểu</h1>
-        <div id="attendSubject" className="attend-list">
-          <a href="../Pages/Products.html?id=200004">
-            <div className="card" style={{ width: "18rem", padding: 10 }}>
-              <img
-                src="http://taodethitracnghiemonline.com/uploads/taodethitracnghiemonline/test/2020/ly12.png"
-                className="card-img-top"
-                alt="..."
-                style={{ height: "15rem" }}
-              />
-              <div className="card-body">
-                <h4>[TestOnline]: Giao thoa ánh sáng</h4>
-                <h5 style={{ color: "green" }}>Môn Vật Lý</h5>
-                <span id="sequence">Lượt thi: 9725</span>
-              </div>
-            </div>
-          </a>
-          <a href="../Pages/Products.html?id=200004">
-            <div className="card" style={{ width: "18rem", padding: 10 }}>
-              <img
-                src="http://taodethitracnghiemonline.com/uploads/taodethitracnghiemonline/test/2020/ly12.png"
-                className="card-img-top"
-                alt="..."
-                style={{ height: "15rem" }}
-              />
-              <div className="card-body">
-                <h4>[TestOnline]: Giao thoa ánh sáng</h4>
-                <h5 style={{ color: "green" }}>Môn Vật Lý</h5>
-                <span id="sequence">Lượt thi: 9725</span>
-              </div>
-            </div>
-          </a>
-          <a href="../Pages/Products.html?id=200004">
-            <div className="card" style={{ width: "18rem", padding: 10 }}>
-              <img
-                src="http://taodethitracnghiemonline.com/uploads/taodethitracnghiemonline/test/2020/ly12.png"
-                className="card-img-top"
-                alt="..."
-                style={{ height: "15rem" }}
-              />
-              <div className="card-body">
-                <h4>[TestOnline]: Giao thoa ánh sáng</h4>
-                <h5 style={{ color: "green" }}>Môn Vật Lý</h5>
-                <span id="sequence">Lượt thi: 9725</span>
-              </div>
-            </div>
-          </a>
-          <a href="../Pages/Products.html?id=200004">
-            <div className="card" style={{ width: "18rem", padding: 10 }}>
-              <img
-                src="http://taodethitracnghiemonline.com/uploads/taodethitracnghiemonline/test/2020/ly12.png"
-                className="card-img-top"
-                alt="..."
-                style={{ height: "15rem" }}
-              />
-              <div className="card-body">
-                <h4>[TestOnline]: Giao thoa ánh sáng</h4>
-                <h5 style={{ color: "green" }}>Môn Vật Lý</h5>
-                <span id="sequence">Lượt thi: 9725</span>
-              </div>
-            </div>
-          </a>
-        </div>
-      </section>
+
       <Footer />
     </div>
   );

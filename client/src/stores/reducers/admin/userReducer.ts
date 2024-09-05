@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Users } from "../../../interface/admin";
-import { addUser, getAllUser, searchUser, updateUserStatus } from "../../../services/admin/user.service";
+import { addUser, getAllUser, paginateUser, searchUser, sortUser, updateUser, updateUserStatus } from "../../../services/admin/user.service";
 
 const userState: Users[] = [];
 
 const userReducer = createSlice({
     name: "user",
     initialState: {
-        user: userState
+        user: userState,
+        account: JSON.parse(localStorage.getItem('account') || '{}'),
     },
     reducers: {
 
@@ -27,6 +28,16 @@ const userReducer = createSlice({
             }
         })
         .addCase(searchUser.fulfilled, (state, action) => {
+            state.user = action.payload;
+        })
+        .addCase(updateUser.fulfilled, (state, action) => {
+            state.account = action.payload
+            localStorage.setItem("account", JSON.stringify(action.payload))
+        })
+        .addCase(sortUser.fulfilled, (state, action) => {
+            state.user = action.payload;
+        })
+        .addCase(paginateUser.fulfilled, (state, action) => {
             state.user = action.payload;
         })
     }

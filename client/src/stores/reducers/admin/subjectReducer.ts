@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Subject } from "../../../interface/admin";
-import { addSubject, deleteSubject, getAllSubject, searchSubject, updateSubject } from "../../../services/admin/subject.service";
+import { addSubject, deleteSubject, getAllSubject, searchSubject, sortSubject, updateSubject } from "../../../services/admin/subject.service";
 
 const subjectState: Subject[] = [];
 
@@ -24,6 +24,9 @@ const subjectReducer = createSlice({
             state.subject = state.subject.map((subject) => subject.id === action.payload.id ? action.payload : subject) ;
         })
         .addCase(searchSubject.fulfilled, (state, action) => {
+            state.subject = action.payload;
+        })
+        .addCase(sortSubject.fulfilled, (state, action) => {
             state.subject = action.payload;
         })
     }

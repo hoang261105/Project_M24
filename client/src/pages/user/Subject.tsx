@@ -24,6 +24,7 @@ export default function Subjects() {
 
   const handleClick = (id: number, subject: Subject) => {
     navigate(`/exam/${subject.nameSubject}/${id}`);
+    localStorage.setItem("idSubject", JSON.stringify(id))
   };
 
   return (

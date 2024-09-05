@@ -87,6 +87,17 @@
   .c:hover {
     background-color: grey;
   }
+
+  .question-button {
+    background-color: #f0f0f0;
+    color: black;
+  }
+  
+  .question-button.answered {
+    background-color: green;
+    color: white;
+  }
+  
   
   .submit-menu {
     width: 100px;

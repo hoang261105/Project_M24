@@ -15,6 +15,7 @@ import Menu from "../../components/admin/Menu";
 import { format } from "date-fns";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../config/firebase";
+import { sortCourse } from "../../services/admin/course.service";
 
 export default function AdminSubject() {
   const [image, setImage] = useState<string>("");
@@ -164,6 +165,11 @@ export default function AdminSubject() {
       setShowEdit(false);
     }
   };
+
+  // Hàm sắp xếp môn
+  const handleSort = (sort: string) => {
+    dispatch(sortCourse(sort));
+  };
   return (
     <>
       <Menu />
@@ -305,12 +311,13 @@ export default function AdminSubject() {
           </div>
           <div className="user-info">
             <div className="sort">
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onChange={(e) => handleSort(e.target.value)}
+              >
                 <option>Sắp xếp theo</option>
-                <option value="1">Ngày tạo</option>
-                <option value="2">Từ A-Z</option>
-                <option value="3">Từ Z-A</option>
-                <option value="4">Số chương</option>
+                <option value="asc">Từ A-Z</option>
+                <option value="desc">Từ Z-A</option>
               </Form.Select>
             </div>
             <div className="search-box">
@@ -327,9 +334,6 @@ export default function AdminSubject() {
         <div className="table-wrapper">
           <div className="title">
             <h3 className="main-title">Bảng quản lí môn thi của {course}</h3>{" "}
-            <br />
-            <button className="btn btn-danger">Xóa tất cả</button>
-            <button className="btn btn-warning">Xóa nhiều</button>
           </div>
           <br />
           <div className="table-container">

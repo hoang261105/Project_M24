@@ -13,11 +13,14 @@ import {
 import { AddExam, Exam } from "../../interface/admin";
 import Menu from "../../components/admin/Menu";
 import { format } from "date-fns";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../config/firebase";
 
 export default function AdminExam() {
   const [examDelete, setExamDelete] = useState<Exam | null>(null);
   const examState = useSelector((state: any) => state.exams.exam);
   const { idLesson } = useParams();
+  const [image, setImage] = useState<string>("");
   const dispatch = useDispatch();
 
   const handleClick = (id: number, exam: Exam) => {
@@ -47,7 +50,7 @@ export default function AdminExam() {
   const [inputValue, setInputValue] = useState<AddExam>({
     nameLesson: "",
     describe: "",
-    level: 0,
+    image: "",
   });
 
   const [error, setError] = useState({
@@ -85,7 +88,7 @@ export default function AdminExam() {
         idLesson: idLesson,
         nameLesson: inputValue.nameLesson,
         describe: inputValue.describe,
-        level: inputValue.level,
+        image: inputValue.image,
         dateAdd: format(new Date(), "dd/MM/yyyy HH:mm:ss"),
         examTurn: 0,
       };
@@ -97,6 +100,20 @@ export default function AdminExam() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInputValue({ ...inputValue, [name]: value });
+  };
+
+  const handleUploadChange = (e: any) => {
+    let image: any = e.target.files[0];
+    const imageRef = ref(storage, `images/${image.name}`);
+    uploadBytes(imageRef, image).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        setImage(image);
+        setInputValue({
+          ...inputValue,
+          image: url,
+        });
+      });
+    });
   };
 
   // Hàm cập nhật đề thi
@@ -203,15 +220,11 @@ export default function AdminExam() {
                       className="mb-3"
                       controlId="exampleForm.ControlInput1"
                     >
-                      <Form.Label>Độ khó</Form.Label>
+                      <Form.Label>Hình ảnh</Form.Label>
                       <Form.Control
-                        type="number"
-                        placeholder="Nhập độ khó"
-                        name="level"
-                        value={inputValue.level}
-                        min={1}
-                        max={5}
-                        onChange={handleChange}
+                        type="file"
+                        name="image"
+                        onChange={handleUploadChange}
                       />
                     </Form.Group>
                   </Form>
@@ -269,21 +282,6 @@ export default function AdminExam() {
                         </span>
                       )}
                     </Form.Group>
-                    <Form.Group
-                      className="mb-3"
-                      controlId="exampleForm.ControlInput1"
-                    >
-                      <Form.Label>Độ khó</Form.Label>
-                      <Form.Control
-                        type="number"
-                        placeholder="Nhập độ khó"
-                        name="level"
-                        value={examEdit?.level || ""}
-                        min={1}
-                        max={5}
-                        onChange={handleExamChange}
-                      />
-                    </Form.Group>
                   </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -330,7 +328,7 @@ export default function AdminExam() {
                   <th>Tên chương</th>
                   <th>Ngày tạo</th>
                   <th>Lượt thi</th>
-                  <th>Độ khó</th>
+                  <th>Mô tả</th>
                   <th className="w-52">Chức năng</th>
                 </tr>
               </thead>
@@ -345,7 +343,7 @@ export default function AdminExam() {
                     </td>
                     <td>{exam.dateAdd}</td>
                     <td>{exam.examTurn}</td>
-                    <td>{exam.level}</td>
+                    <td>{exam.describe}</td>
                     <td className="flex gap-2">
                       <Button
                         variant="primary"

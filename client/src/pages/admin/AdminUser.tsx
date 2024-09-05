@@ -8,6 +8,7 @@ import {
   addUser,
   getAllUser,
   searchUser,
+  sortUser,
   updateUserStatus,
 } from "../../services/admin/user.service";
 import { Account, Users } from "../../interface/admin";
@@ -67,15 +68,6 @@ export default function AdminUser() {
   useEffect(() => {
     setFilterUser(userState);
   }, [userState]);
-
-  const navigate = useNavigate();
-
-  const handleLogOut = () => {
-    const confirmLogOut = confirm("Bạn có chắc chắn đăng xuất không?");
-    if (confirmLogOut) {
-      navigate("/logout");
-    }
-  };
 
   const [show, setShow] = useState(false);
 
@@ -215,6 +207,10 @@ export default function AdminUser() {
     }
   };
 
+  const handleSort = (order: string) => {
+    dispatch(sortUser(order));
+  };
+
   return (
     <>
       <Menu />
@@ -226,11 +222,13 @@ export default function AdminUser() {
               <h2>Quản lí tài khoản</h2>
             </div>
             <div className="sort">
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onChange={(e) => handleSort(e.target.value)}
+              >
                 <option>Sắp xếp theo</option>
-                <option value="1">Ngày tháng năm</option>
-                <option value="2">Từ A-Z</option>
-                <option value="3">Từ Z-A</option>
+                <option value="asc">Từ A-Z</option>
+                <option value="desc">Từ Z-A</option>
               </Form.Select>
             </div>
           </div>
@@ -347,17 +345,13 @@ export default function AdminUser() {
         <div className="table-wrapper">
           <div className="title">
             <h3 className="main-title">Bảng thống kê tài khoản</h3> <br />
-            <button className="btn btn-danger">Xóa tất cả</button>
-            <button className="btn btn-warning">Xóa nhiều</button>
           </div>
           <br />
           <div className="table-container">
             <table>
               <thead>
                 <tr>
-                  <th>
-                    <input type="checkbox" />
-                  </th>
+                  <th>STT</th>
                   <th>Hình ảnh</th>
                   <th>Tên tài khoản</th>
                   <th>Email</th>
@@ -367,14 +361,12 @@ export default function AdminUser() {
                 </tr>
               </thead>
               <tbody>
-                {filterUser.map((user: Users) => (
+                {filterUser.map((user: Users, index: number) => (
                   <tr
                     key={user.id}
                     style={{ opacity: user.status === 1 ? 0.5 : 1 }}
                   >
-                    <td>
-                      <input type="checkbox" disabled={user.status === 1} />
-                    </td>
+                    <td>{index + 1}</td>
                     <td>
                       <img src={user.image} alt="" />
                     </td>

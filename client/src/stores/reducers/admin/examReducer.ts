@@ -26,6 +26,7 @@ const examReducer = createSlice({
         })
         .addCase(getExamById.fulfilled, (state, action) => {
             state.examDetail = action.payload;
+            console.log(action.payload)
         })
         .addCase(searchExam.fulfilled, (state, action) => {
             state.exam = action.payload;

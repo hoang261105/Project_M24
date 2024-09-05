@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Course } from "../../../interface/admin"; 
-import { addCourse, deleteCourse, getAllCourse, searchCourse, updateCourse } from "../../../services/admin/course.service"; 
+import { addCourse, deleteCourse, getAllCourse, searchCourse, sortCourse, updateCourse } from "../../../services/admin/course.service"; 
 
 const courseState: Course[] = []
 
@@ -24,6 +24,9 @@ const courseReducer: any = createSlice({
             state.course = state.course.map((course: Course) => course.id === action.payload.id ? action.payload : course)
         })
         .addCase(searchCourse.fulfilled, (state, action) => {
+            state.course = action.payload
+        })
+        .addCase(sortCourse.fulfilled, (state, action) => {
             state.course = action.payload
         })
     },
