@@ -1,79 +1,81 @@
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
-  addCourse,
-  deleteCourse,
-  getAllCourse,
-  searchCourse,
-  sortCourse,
-  updateCourse,
-} from "../../services/admin/course.service";
-import { AddCourse, Course } from "../../interface/admin";
-import { format } from "date-fns";
+  addExam,
+  deleteExam,
+  getAllExam,
+  updateExam,
+} from "../../services/admin/exam.service";
+import { AddExam, Exam } from "../../interface/admin";
 import Menu from "../../components/admin/Menu";
+import { format } from "date-fns";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../config/firebase";
 
-export default function AdminCourse() {
+export default function AdminExam() {
+  const [examDelete, setExamDelete] = useState<Exam | null>(null);
+  const examState = useSelector((state: any) => state.exams.exam);
+  const { idLesson } = useParams();
   const [image, setImage] = useState<string>("");
-  const navigate = useNavigate();
-  const courseState = useSelector((state: any) => state.courses.course);
   const dispatch = useDispatch();
 
+  const handleClick = (id: number, exam: Exam) => {
+    navigate(`/adminQues/${exam.nameLesson}/${id}`);
+  };
+
   useEffect(() => {
-    dispatch(getAllCourse());
+    if (idLesson) {
+      dispatch(getAllExam(parseInt(idLesson)));
+    }
   }, [dispatch]);
 
-  const handleClick = (id: number, course: Course) => {
-    navigate(`/adminSubject/${course.nameCourse}/${id}`);
-  };
-  console.log(courseState);
-
+  const navigate = useNavigate();
+  const { subject } = useParams();
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleCloseEdit = () => setShowEdit(false);
-  const handleShowEdit = (course: Course) => {
-    setCourseEdit(course);
+  const handleShowEdit = (exam: Exam) => {
+    setExamEdit(exam);
     setShowEdit(true);
   };
+  const handleCloseEdit = () => setShowEdit(false);
 
-  const resetData = () => {
-    setInputValue({
-      nameCourse: "",
-      describe: "",
-      image: "",
-    });
-  };
-
-  // Hàm thêm khóa học
-  const [inputValue, setInputValue] = useState<AddCourse>({
-    nameCourse: "",
+  // Hàm thêm đề thi
+  const [inputValue, setInputValue] = useState<AddExam>({
+    nameLesson: "",
     describe: "",
     image: "",
   });
+
   const [error, setError] = useState({
-    nameCourse: "",
+    nameLesson: "",
     describe: "",
   });
-  const [courseDelete, setCourseDelete] = useState<Course | null>(null);
+
+  // Hàm xóa đề thi
+  const handleDelete = async (id: number) => {
+    await dispatch(deleteExam(id));
+    setExamDelete(null);
+    await dispatch(getAllExam());
+  };
 
   const handleAdd = async () => {
     let valid = true;
-    if (!inputValue.nameCourse) {
-      error.nameCourse = "Tên khóa thi không được để trống";
+    if (!inputValue.nameLesson) {
+      error.nameLesson = "Tên đề thi không được để trống";
       valid = false;
     } else {
-      error.nameCourse = "";
+      error.nameLesson = "";
     }
 
     if (!inputValue.describe) {
-      error.describe = "Vui lòng nhập mô tả khóa học";
+      error.describe = "Vui lòng nhập mô tả";
       valid = false;
     } else {
       error.describe = "";
@@ -82,16 +84,15 @@ export default function AdminCourse() {
     setError({ ...error });
 
     if (valid) {
-      const newCourse = {
-        ...inputValue,
-        nameCourse: inputValue.nameCourse,
-        created_at: format(new Date(), "dd/MM/yyyy HH:mm:ss"),
+      const newExam = {
+        idLesson: idLesson,
+        nameLesson: inputValue.nameLesson,
         describe: inputValue.describe,
+        image: inputValue.image,
+        dateAdd: format(new Date(), "dd/MM/yyyy HH:mm:ss"),
+        examTurn: 0,
       };
-
-      await dispatch(addCourse(newCourse));
-      await dispatch(getAllCourse());
-      resetData();
+      await dispatch(addExam(newExam));
       setShow(false);
     }
   };
@@ -115,68 +116,48 @@ export default function AdminCourse() {
     });
   };
 
-  // Hàm xóa khóa học
-  const handleDelete = async (id: number) => {
-    await dispatch(deleteCourse(id));
-    await dispatch(getAllCourse());
-    setCourseDelete(null);
-  };
-
-  // Hàm sửa khóa học
-  const [courseEdit, setCourseEdit] = useState<Course | null>(null);
-  const handleCourseEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (courseEdit) {
-      setCourseEdit({
-        ...courseEdit,
-        [e.target.name]: e.target.value,
-      });
-    }
-  };
+  // Hàm cập nhật đề thi
+  const [examEdit, setExamEdit] = useState<Exam | null>(null);
   const handleEdit = async () => {
-    console.log(123456);
     let valid = true;
-    if (!courseEdit?.nameCourse) {
-      error.nameCourse = "Tên khóa thi không được để trống";
+    if (!examEdit?.nameLesson) {
+      error.nameLesson = "Tên đề thi không được để trống";
       valid = false;
     } else {
-      error.nameCourse = "";
+      error.nameLesson = "";
     }
 
-    if (!courseEdit?.describe) {
-      error.describe = "Vui lòng nhập mô tả khóa học";
+    if (!examEdit?.describe) {
+      error.describe = "Vui lòng nhập mô tả";
       valid = false;
     } else {
       error.describe = "";
     }
-
     setError({ ...error });
-    if (valid && courseEdit) {
-      await dispatch(
-        updateCourse({
-          id: courseEdit.id,
-          nameCourse: courseEdit.nameCourse,
-          created_at: format(new Date(), "dd/MM/yyyy HH:mm:ss"),
-          describe: courseEdit.describe,
-        })
-      );
-      await dispatch(getAllCourse());
+
+    if (valid && examEdit) {
+      const updatedExam = {
+        id: examEdit.id,
+        idLesson: idLesson,
+        nameLesson: examEdit.nameLesson,
+        describe: examEdit.describe,
+        dateAdd: format(new Date(), "dd/MM/yyyy HH:mm:ss"),
+        examTurn: 0,
+        level: examEdit.level,
+      };
+      await dispatch(updateExam(updatedExam));
       setShowEdit(false);
-      console.log(124444454);
     }
   };
 
-  // Hàm tìm kiếm khóa học
-  const [search, setSearch] = useState<string>("");
-  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-    await dispatch(searchCourse(search));
+  const handleExamChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (examEdit) {
+      setExamEdit({
+        ...examEdit,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
-
-  // Hàm sắp xếp khóa học
-  const handleSort = (sort: string) => {
-    dispatch(sortCourse(sort));
-  }
-
   return (
     <>
       <Menu />
@@ -186,16 +167,16 @@ export default function AdminCourse() {
           <div className="header-title">
             <div className="title">
               <span>Thi online</span>
-              <h2>Quản lí khóa học</h2>
+              <h2>Quản lí đề thi</h2>
             </div>
             <div className="addSubject">
               <Button variant="primary" onClick={handleShow}>
-                + Thêm khóa thi
+                + Thêm đề thi
               </Button>
 
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Thêm khóa thi</Modal.Title>
+                  <Modal.Title>Thêm đề thi</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <Form>
@@ -203,17 +184,17 @@ export default function AdminCourse() {
                       className="mb-3"
                       controlId="exampleForm.ControlInput1"
                     >
-                      <Form.Label>Nhập tên khóa thi</Form.Label>
+                      <Form.Label>Tên đề thi</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Nhập tên khóa"
-                        name="nameCourse"
-                        value={inputValue.nameCourse}
+                        placeholder="Nhập tên đề thi"
+                        name="nameLesson"
+                        value={inputValue.nameLesson}
                         onChange={handleChange}
                       />
-                      {error.nameCourse && (
-                        <span style={{ color: "red", fontSize: 15 }}>
-                          {error.nameCourse}
+                      {error.nameLesson && (
+                        <span style={{ color: "red", fontSize: 14 }}>
+                          {error.nameLesson}
                         </span>
                       )}
                     </Form.Group>
@@ -221,7 +202,7 @@ export default function AdminCourse() {
                       className="mb-3"
                       controlId="exampleForm.ControlInput1"
                     >
-                      <Form.Label>Nhập mô tả khóa học</Form.Label>
+                      <Form.Label>Mô tả</Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Nhập mô tả"
@@ -230,7 +211,7 @@ export default function AdminCourse() {
                         onChange={handleChange}
                       />
                       {error.describe && (
-                        <span style={{ color: "red", fontSize: 15 }}>
+                        <span style={{ color: "red", fontSize: 14 }}>
                           {error.describe}
                         </span>
                       )}
@@ -242,27 +223,26 @@ export default function AdminCourse() {
                       <Form.Label>Hình ảnh</Form.Label>
                       <Form.Control
                         type="file"
-                        placeholder="Chọn hình ảnh"
                         name="image"
                         onChange={handleUploadChange}
                       />
                     </Form.Group>
                   </Form>
                 </Modal.Body>
-
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
                     Hủy
                   </Button>
                   <Button variant="primary" onClick={handleAdd}>
-                    Thêm khóa thi
+                    Thêm đề thi
                   </Button>
                 </Modal.Footer>
               </Modal>
 
+              {/* Modal sửa đề thi */}
               <Modal show={showEdit} onHide={handleCloseEdit}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Sửa khóa thi</Modal.Title>
+                  <Modal.Title>Sửa đề thi</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <Form>
@@ -270,17 +250,17 @@ export default function AdminCourse() {
                       className="mb-3"
                       controlId="exampleForm.ControlInput1"
                     >
-                      <Form.Label>Nhập tên khóa thi</Form.Label>
+                      <Form.Label>Sửa đề thi</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Nhập tên khóa"
-                        name="nameCourse"
-                        value={courseEdit?.nameCourse || ""}
-                        onChange={handleCourseEditChange}
+                        placeholder="Nhập tên đề thi"
+                        name="nameLesson"
+                        value={examEdit?.nameLesson || ""}
+                        onChange={handleExamChange}
                       />
-                      {error.nameCourse && (
-                        <span style={{ color: "red", fontSize: 15 }}>
-                          {error.nameCourse}
+                      {error.nameLesson && (
+                        <span style={{ color: "red", fontSize: 14 }}>
+                          {error.nameLesson}
                         </span>
                       )}
                     </Form.Group>
@@ -288,23 +268,22 @@ export default function AdminCourse() {
                       className="mb-3"
                       controlId="exampleForm.ControlInput1"
                     >
-                      <Form.Label>Nhập mô tả khóa</Form.Label>
+                      <Form.Label>Mô tả</Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Nhập mô tả"
                         name="describe"
-                        value={courseEdit?.describe || ""}
-                        onChange={handleCourseEditChange}
+                        value={examEdit?.describe || ""}
+                        onChange={handleExamChange}
                       />
                       {error.describe && (
-                        <span style={{ color: "red", fontSize: 15 }}>
+                        <span style={{ color: "red", fontSize: 14 }}>
                           {error.describe}
                         </span>
                       )}
                     </Form.Group>
                   </Form>
                 </Modal.Body>
-
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleCloseEdit}>
                     Hủy
@@ -318,23 +297,19 @@ export default function AdminCourse() {
           </div>
           <div className="user-info">
             <div className="sort">
-              <Form.Select
-                aria-label="Default select example"
-                onChange={(e) => handleSort(e.target.value)}
-              >
+              <Form.Select aria-label="Default select example">
                 <option>Sắp xếp theo</option>
-                <option value="asc">Từ A-Z</option>
-                <option value="desc">Từ Z-A</option>
+                <option value="1">Ngày tạo</option>
+                <option value="2">Từ A-Z</option>
+                <option value="3">Từ Z-A</option>
+                <option value="4">Độ khó</option>
+                <option value="5">Lượt thi nhiều nhất</option>
+                <option value="6">Lượt thi ít nhất</option>
               </Form.Select>
             </div>
             <div className="search-box">
               <i className="fa-solid fa-search"></i>
-              <input
-                type="text"
-                placeholder="Tìm kiếm ở đây"
-                onChange={handleSearch}
-                value={search}
-              />
+              <input type="text" placeholder="Tìm kiếm ở đây" />
             </div>
             <img
               src="https://static.vecteezy.com/system/resources/thumbnails/005/005/791/small/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"
@@ -344,42 +319,41 @@ export default function AdminCourse() {
         </div>
 
         <div className="table-wrapper">
-          <div className="title">
-            <h3 className="main-title">Bảng quản lí khóa học</h3> <br />
-          </div>
-          <br />
+          <h3 className="main-title">Bảng đề thi của {subject}</h3> <br />
           <div className="table-container">
             <table>
               <thead>
                 <tr>
                   <th>STT</th>
-                  <th>Tên khóa học học</th>
+                  <th>Tên chương</th>
                   <th>Ngày tạo</th>
+                  <th>Lượt thi</th>
                   <th>Mô tả</th>
                   <th className="w-52">Chức năng</th>
                 </tr>
               </thead>
               <tbody>
-                {courseState.map((course: Course, index: number) => (
-                  <tr key={course.id}>
+                {examState.map((exam: Exam, index: number) => (
+                  <tr>
                     <td>{index + 1}</td>
                     <td>
-                      <a href="" onClick={() => handleClick(course.id, course)}>
-                        {course.nameCourse}
+                      <a href="" onClick={() => handleClick(exam.id, exam)}>
+                        {exam.nameLesson}
                       </a>
                     </td>
-                    <td>{course.created_at}</td>
-                    <td>{course.describe}</td>
+                    <td>{exam.dateAdd}</td>
+                    <td>{exam.examTurn}</td>
+                    <td>{exam.describe}</td>
                     <td className="flex gap-2">
                       <Button
                         variant="primary"
-                        onClick={() => handleShowEdit(course)}
+                        onClick={() => handleShowEdit(exam)}
                       >
                         Sửa
                       </Button>
                       <button
                         className="btn btn-danger"
-                        onClick={() => setCourseDelete(course)}
+                        onClick={() => setExamDelete(exam)}
                       >
                         Xóa
                       </button>
@@ -388,29 +362,29 @@ export default function AdminCourse() {
                 ))}
               </tbody>
             </table>
-            {courseDelete && (
+            {examDelete && (
               <div className="overlay">
                 <div className="modal-custom">
                   <div className="modal-header-custom">
                     <h5>Xác nhận</h5>
                     <i
                       className="fas fa-xmark"
-                      onClick={() => setCourseDelete(null)}
+                      onClick={() => setExamDelete(null)}
                     />
                   </div>
                   <div className="modal-body-custom">
-                    <p>Bạn chắc chắn muốn xóa {courseDelete?.nameCourse}?</p>
+                    <p>Bạn chắc chắn muốn xóa {examDelete?.nameLesson}?</p>
                   </div>
                   <div className="modal-footer-footer">
                     <button
                       className="btn btn-light"
-                      onClick={() => setCourseDelete(null)}
+                      onClick={() => setExamDelete(null)}
                     >
                       Hủy
                     </button>
                     <button
                       className="btn btn-danger"
-                      onClick={() => handleDelete(courseDelete.id)}
+                      onClick={() => handleDelete(examDelete.id)}
                     >
                       Xóa
                     </button>
@@ -418,11 +392,10 @@ export default function AdminCourse() {
                 </div>
               </div>
             )}
-
             <br />
             <div className="statistical">
               <div className="total-records">
-                <p>Hiển thị 5/{courseState.length} bản ghi</p>
+                <p>Hiển thị 10/20 bản ghi</p>
               </div>
               <div className="pagination">
                 <Form.Select aria-label="Default select example">

@@ -11,7 +11,7 @@ export default function Menu() {
   };
   return (
     <div className="sidebar">
-      <div className="logo">
+      <div className="logo-container">
         <h2>ADMIN</h2> <br />
         <ul className="menu">
           <li className="active">

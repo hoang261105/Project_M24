@@ -7,10 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addUser,
   getAllUser,
+  searchUser,
+  sortUser,
   updateUserStatus,
 } from "../../services/admin/user.service";
 import { Account, Users } from "../../interface/admin";
 import { format } from "date-fns";
+import Menu from "../../components/admin/Menu";
 
 function validateEmail(email: any) {
   return String(email)
@@ -54,21 +57,17 @@ export default function AdminUser() {
   const handleShow = () => setShows(true);
   const [selectedUser, setSelectedUser] = useState<Users | null>(null);
   const userState = useSelector((state: any) => state.users.user);
+  const [filterUser, setFilterUser] = useState<Users[]>([]);
   console.log(userState);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllUser());
-  }, []);
+  }, [dispatch]);
 
-  const navigate = useNavigate();
-
-  const handleLogOut = () => {
-    const confirmLogOut = confirm("Bạn có chắc chắn đăng xuất không?");
-    if (confirmLogOut) {
-      navigate("/logout");
-    }
-  };
+  useEffect(() => {
+    setFilterUser(userState);
+  }, [userState]);
 
   const [show, setShow] = useState(false);
 
@@ -195,58 +194,26 @@ export default function AdminUser() {
     }
   };
 
+  // Hàm tìm kiếm user
+  const [search, setSearch] = useState<string>("");
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value;
+    setSearch(searchValue);
+    if (!searchValue) {
+      setFilterUser(userState);
+    } else {
+      const result = await dispatch(searchUser(searchValue));
+      setFilterUser(result.payload);
+    }
+  };
+
+  const handleSort = (order: string) => {
+    dispatch(sortUser(order));
+  };
+
   return (
     <>
-      <div className="sidebar">
-        <div className="logo">
-          <h2>ADMIN</h2> <br />
-          <ul className="menu">
-            <li className="active">
-              <NavLink to={"/adminHome"}>
-                <i className="fas fa-tachometer-alt"></i>
-                <span>Trang chủ</span>
-              </NavLink>
-            </li>
-            <li>
-              <a href="">
-                <i className="fas fa-user"></i>
-                <span>Quản lí tài khoản</span>
-              </a>
-            </li>
-            <li>
-              <NavLink to={"/adminCourse"}>
-                <i className="fa-solid fa-book"></i>
-                <span>Quản lí khóa học</span>
-              </NavLink>
-            </li>
-            <li>
-              <a href="">
-                <i className="fas fa-chart-bar"></i>
-                <span>Phân tích</span>
-              </a>
-            </li>
-
-            <li>
-              <a href="">
-                <i className="fas fa-question-circle"></i>
-                <span>Câu hỏi</span>
-              </a>
-            </li>
-            <li>
-              <a href="">
-                <i className="fas fa-cog"></i>
-                <span>Cài đặt</span>
-              </a>
-            </li>
-            <li className="logout">
-              <a href="" onClick={handleLogOut}>
-                <i className="fas fa-sign-out-alt"></i>
-                <span>Đăng xuất</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <Menu />
       <div className="main-content">
         <div className="header-wrapper">
           <div className="header-title">
@@ -255,11 +222,13 @@ export default function AdminUser() {
               <h2>Quản lí tài khoản</h2>
             </div>
             <div className="sort">
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onChange={(e) => handleSort(e.target.value)}
+              >
                 <option>Sắp xếp theo</option>
-                <option value="1">Ngày tháng năm</option>
-                <option value="2">Từ A-Z</option>
-                <option value="3">Từ Z-A</option>
+                <option value="asc">Từ A-Z</option>
+                <option value="desc">Từ Z-A</option>
               </Form.Select>
             </div>
           </div>
@@ -360,7 +329,12 @@ export default function AdminUser() {
             </Modal>
             <div className="search-box">
               <i className="fa-solid fa-search"></i>
-              <input type="text" placeholder="Tìm kiếm ở đây" />
+              <input
+                type="text"
+                placeholder="Tìm kiếm ở đây"
+                onChange={handleSearch}
+                value={search}
+              />
             </div>
             <img
               src="https://static.vecteezy.com/system/resources/thumbnails/005/005/791/small/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"
@@ -371,17 +345,13 @@ export default function AdminUser() {
         <div className="table-wrapper">
           <div className="title">
             <h3 className="main-title">Bảng thống kê tài khoản</h3> <br />
-            <button className="btn btn-danger">Xóa tất cả</button>
-            <button className="btn btn-warning">Xóa nhiều</button>
           </div>
           <br />
           <div className="table-container">
             <table>
               <thead>
                 <tr>
-                  <th>
-                    <input type="checkbox" />
-                  </th>
+                  <th>STT</th>
                   <th>Hình ảnh</th>
                   <th>Tên tài khoản</th>
                   <th>Email</th>
@@ -391,14 +361,12 @@ export default function AdminUser() {
                 </tr>
               </thead>
               <tbody>
-                {userState.map((user: Users) => (
+                {filterUser.map((user: Users, index: number) => (
                   <tr
                     key={user.id}
                     style={{ opacity: user.status === 1 ? 0.5 : 1 }}
                   >
-                    <td>
-                      <input type="checkbox" disabled={user.status === 1} />
-                    </td>
+                    <td>{index + 1}</td>
                     <td>
                       <img src={user.image} alt="" />
                     </td>

@@ -52,3 +52,13 @@ export const searchCourse: any = createAsyncThunk(
         return response.data
     }
 )
+
+// API sắp xếp khóa học từ A-Z và từ Z-A
+export const sortCourse: any = createAsyncThunk(
+    "course/sortCourse",
+    async (sort: string) => {
+        let url=import.meta.env.VITE_BASE_URL;
+        const response = await axios.get(`${url}/course?_sort=nameCourse&_order=${sort}`);
+        return response.data
+    }
+)
